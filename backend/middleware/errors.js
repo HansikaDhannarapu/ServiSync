@@ -1,0 +1,2 @@
+export function notFound(req,res){res.status(404).json({message:'That page or resource was not found.'});}
+export function errors(err,req,res,next){console.error(err.message);if(res.headersSent)return next(err);const status=err.status||(err.name==='ValidationError'||err.name==='CastError'?400:err.code===11000?409:500);const message=status===400?'Some of the provided information is invalid.':status===409?'That record already exists.':err.status?err.message:'Something went wrong. Please try again.';res.status(status).json({message});}
