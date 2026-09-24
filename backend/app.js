@@ -20,7 +20,7 @@ import { uploadImage,uploadConfigured } from './services/storageService.js';
 
 const app=express();
 const uploadsDirectory=fileURLToPath(new URL('./uploads/',import.meta.url));
-const configuredOrigins=new Set((process.env.CLIENT_URL||'http://localhost:5173').split(',').map(x=>x.trim()).filter(Boolean));
+const configuredOrigins=new Set((process.env.CLIENT_URL||'').split(',').map(x=>x.trim()).filter(Boolean));
 const isLocalDevelopmentOrigin=origin=>process.env.NODE_ENV!=='production'&&/^http:\/\/(?:localhost|127\.0\.0\.1|\[::1\])(?::\d+)?$/.test(origin);
 app.use(cors({origin(origin,callback){if(!origin||configuredOrigins.has(origin)||isLocalDevelopmentOrigin(origin))return callback(null,true);return callback(null,false);},credentials:true}));
 app.use(express.json({limit:'1mb'})); app.use(cookieParser());
